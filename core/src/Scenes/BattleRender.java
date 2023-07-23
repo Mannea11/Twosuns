@@ -168,19 +168,19 @@ public class BattleRender implements Clickable {
                 int randomNum = random.nextInt(5) + 1;
                 switch (randomNum) {
                     case 1:
-                        dice1 = new Texture("dice1.png");
+                        dice1 = new Texture("dice_1.png");
                         break;
                     case 2:
-                        dice1 = new Texture("dice2.png");
+                        dice1 = new Texture("dice_2.png");
                         break;
                     case 3:
-                        dice1 = new Texture("dice3.png");
+                        dice1 = new Texture("dice_3.png");
                         break;
                     case 4:
-                        dice1 = new Texture("dice4.png");
+                        dice1 = new Texture("dice_4.png");
                         break;
                     case 5:
-                        dice1 = new Texture("dice5.png");
+                        dice1 = new Texture("dice_5.png");
                         break;
                 }
                 randomPngsToShow--;

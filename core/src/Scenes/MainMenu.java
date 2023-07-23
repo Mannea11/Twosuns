@@ -13,13 +13,18 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.text.View;
 
+import InputManagers.Clickable;
+import InputManagers.InputHandler;
 import Screens.PlayScreen;
 import Screens.TwoSuns;
 import de.eskalon.commons.screen.ManagedScreen;
 
-public class MainMenu extends ManagedScreen {
+public class MainMenu extends ManagedScreen implements Clickable {
     private TwoSuns twoSuns;
     private SpriteBatch batch;
     private Viewport viewport;
@@ -30,6 +35,9 @@ public class MainMenu extends ManagedScreen {
     private BitmapFont font2;
     private FreeTypeFontGenerator fontGenerator2;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2;
+
+    private InputHandler inputHandler;
+    private List<Clickable> clickables;
 
     public MainMenu(TwoSuns twoSuns) {
         this.twoSuns = twoSuns;
@@ -59,7 +67,12 @@ public class MainMenu extends ManagedScreen {
 
     @Override
     public void show() {
+        super.show();
+        clickables = new ArrayList<>();
+        clickables.add(this);
 
+        inputHandler = new InputHandler(clickables);
+        twoSuns.addInputProcessor(inputHandler);
     }
 
     @Override
@@ -113,5 +126,16 @@ public class MainMenu extends ManagedScreen {
         font2.dispose();
         batch.dispose();
         mainMenuBackground.dispose();
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println("HEEEEJ");
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
     }
 }
