@@ -86,7 +86,7 @@ public class BattleRender implements Clickable {
         batch.setProjectionMatrix(camera.combined);
         float centerX = Gdx.graphics.getWidth() / 2f;
         float centerY = Gdx.graphics.getHeight() / 2f;
-        dice1 = getRandomTexture();
+        //dice1 = getRandomTexture();
         dice2 = new Texture("dice6.png");
         dice3 = new Texture("dice6.png");
         heart = new Texture("HP.png");
@@ -185,7 +185,7 @@ public class BattleRender implements Clickable {
                 }
                 randomPngsToShow--;
             } else {
-                dice1 = getRandomTexture();
+              //  dice1 = getRandomTexture();
                 randomPngsToShow = 5;
             }
 
