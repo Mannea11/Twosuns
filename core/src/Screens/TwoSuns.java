@@ -34,7 +34,7 @@ public class TwoSuns extends ManagedGame<ManagedScreen, ScreenTransition> {
 		HorizontalSlicingTransition Horizontal = new HorizontalSlicingTransition(batch,10,1);
 		screenManager.addScreenTransition("Horizontal", Horizontal);
 
-		this.screenManager.pushScreen("MainMenu", null);
+		this.screenManager.pushScreen("BattleScreen", null);
 
 	}
 
