@@ -4,19 +4,19 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import java.util.List;
 import MainChar.MainCharWalking;
+import Scenes.BattleRender;
 
 public class InputHandler implements InputProcessor {
 
     private OrthographicCamera camera;
     private List<Clickable> clickables;
-    private MainCharWalking mainChar;
 
 
-    public InputHandler(List<Clickable> clickables, MainCharWalking mainChar) {
+    public InputHandler(List<Clickable> clickables) {
         this.clickables = clickables;
-        this.mainChar = mainChar;
-        this.camera = mainChar.getCamera();
     }
+
+
 
     @Override
     public boolean keyDown(int keycode) {
@@ -52,9 +52,13 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        for (Clickable clickable : clickables) {
+            if (clickable.touchDragged(screenX, screenY, pointer)) {
+                return true;
+            }
+        }
         return false;
     }
-
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         return false;

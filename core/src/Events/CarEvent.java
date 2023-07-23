@@ -100,6 +100,11 @@ public class CarEvent extends Event implements Clickable {
         return false;
     }
 
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
 
     public void render(SpriteBatch batch) {
         if (execute && isActive) {

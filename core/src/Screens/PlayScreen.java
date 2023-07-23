@@ -1,6 +1,5 @@
 package Screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -24,47 +23,46 @@ import Message.FirstMessage;
 import MainChar.MainCharWalking;
 import Scenes.GameMap;
 import Scenes.HUD;
+import Screens.TwoSuns;
+import de.eskalon.commons.screen.ManagedScreen;
 
-
-public class PlayScreen implements Screen {
-    private Game game;
+public class PlayScreen extends ManagedScreen {
+    private TwoSuns twoSuns;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Viewport viewport;
     private MainCharWalking mainChar;
     private GameMap gameMap;
     private HouseEvent houseEvent;
-
     private CarEvent carEvent;
     private List<Event> events;
     private int tileWidth;
     private int tileHeight;
     private TiledMap tiledMap;
-
     private List<Clickable> clickables;
     private InputHandler inputHandler;
-
     private FirstMessage firstMessage;
     private HUD hud;
 
-    private TwoSuns twoSuns;
-
-
     public PlayScreen(TwoSuns twoSuns) {
         this.twoSuns = twoSuns;
+    }
+
+    @Override
+    protected void create() {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         gameMap = new GameMap();
-        mainChar = new MainCharWalking(twoSuns,camera, gameMap.getGameMap());
+        mainChar = new MainCharWalking(twoSuns, camera, gameMap.getGameMap());
         mainChar.printMapLayers();
         tiledMap = new TmxMapLoader().load("ny.tmx");
         TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         tileWidth = (int) tileLayer.getTileWidth();
         tileHeight = (int) tileLayer.getTileHeight();
-        houseEvent = new HouseEvent(camera, 11, 56,mainChar);
-        carEvent = new CarEvent(camera,39,58,mainChar);
-        firstMessage = new FirstMessage(camera,mainChar);
+        houseEvent = new HouseEvent(camera, 11, 56, mainChar);
+        carEvent = new CarEvent(camera, 39, 58, mainChar);
+        firstMessage = new FirstMessage(camera, mainChar);
         hud = new HUD();
 
         events = new ArrayList<>();
@@ -72,28 +70,26 @@ public class PlayScreen implements Screen {
         events.add(carEvent);
 
 
+
+    }
+
+
+    public void show() {
+        super.show();
         clickables = new ArrayList<>();
         clickables.add(mainChar);
         clickables.add(houseEvent);
         clickables.add(carEvent);
         clickables.add(firstMessage);
 
-
-        inputHandler = new InputHandler(clickables,mainChar);
-        Gdx.input.setInputProcessor(inputHandler);
-
+        inputHandler = new InputHandler(clickables);
+        twoSuns.addInputProcessor(inputHandler);
     }
 
-    @Override
-    public void show() {
 
-    }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
@@ -102,7 +98,6 @@ public class PlayScreen implements Screen {
 
         batch.begin();
         gameMap.render(camera);
-
         mainChar.update(delta);
         mainChar.render(batch);
 
@@ -110,36 +105,31 @@ public class PlayScreen implements Screen {
         firstMessage.update();
 
         for (Event event : events) {
-                event.render(batch);
-            }
+            event.render(batch);
+        }
         for (Event event : events) {
             event.update(tileX, tileY);
         }
         batch.end();
+
         hud.render();
     }
-
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
         camera.position.set(mainChar.getPosition().x, mainChar.getPosition().y, 0);
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
     }
 
     @Override
     public void hide() {
+        twoSuns.removeInputProcessor(inputHandler);
+    }
 
+    @Override
+    public void resume() {
+        super.resume();
+        twoSuns.addInputProcessor(inputHandler);
     }
 
     @Override
@@ -148,6 +138,5 @@ public class PlayScreen implements Screen {
         hud.dispose();
         gameMap.dispose();
     }
-
 
 }

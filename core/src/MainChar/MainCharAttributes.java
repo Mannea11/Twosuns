@@ -7,10 +7,14 @@ public class MainCharAttributes {
     private int defence;
 
     private int hp;
+
+    private int maxHp;
+
     public MainCharAttributes () {
         attack = 5;
         defence = 5;
         hp = 100;
+        maxHp = 100;
     }
 
     public int getAttack() {
@@ -35,6 +39,14 @@ public class MainCharAttributes {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
     }
 
 }

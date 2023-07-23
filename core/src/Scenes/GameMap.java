@@ -14,10 +14,6 @@ public class GameMap {
     private TiledMap gameMap;
     private TiledMapRenderer tiledMapRenderer;
     private float zoomScale = 2.1f;
-
-    private MainCharWalking mainChar;
-
-    private OrthographicCamera camera;
     private MapLayer cloudLayer;
 
     public GameMap() {

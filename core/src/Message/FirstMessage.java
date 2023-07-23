@@ -56,6 +56,11 @@ public class FirstMessage implements Clickable {
         return true;
     }
 
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
     public void render(SpriteBatch batch) {
         if (isActive) {
             mainChar.setMoving(false);

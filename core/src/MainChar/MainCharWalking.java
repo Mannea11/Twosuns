@@ -37,7 +37,6 @@ public class MainCharWalking implements Clickable {
     private Game game;
     private TwoSuns twoSuns;
 
-    private BattleScreen battleScreen;
 
     public MainCharWalking(TwoSuns twoSuns, OrthographicCamera camera, TiledMap tiledMap) {
         this.twoSuns = twoSuns;
@@ -48,8 +47,6 @@ public class MainCharWalking implements Clickable {
         position = new Vector2(2218, 4369);
         targetPosition = new Vector2(position);
         stepsTaken = 0.0f;
-        battleScreen = new BattleScreen(twoSuns);
-
 
     }
 
@@ -123,6 +120,11 @@ public class MainCharWalking implements Clickable {
             }
         }
 
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
         return false;
     }
 
@@ -230,9 +232,10 @@ public class MainCharWalking implements Clickable {
     }
 
     private boolean EnemyTier1() {
-        if (isPositionOnTier1(position) && Math.random() < 0.1) {
+        if (isPositionOnTier1(position) && Math.random() < 0.005) {
             System.out.println("Enemy encounter!");
-            twoSuns.setBattleScreen();
+            isMoving = false;
+            this.twoSuns.getScreenManager().pushScreen("BattleScreen", "Horizontal");
         }
         return false;
     }

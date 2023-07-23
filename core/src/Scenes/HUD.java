@@ -17,10 +17,6 @@ public class HUD  {
     private Texture Home;
     private Texture HP;
 
-    OrthographicCamera camera;
-
-    private MainCharWalking mainCharWalking;
-
 
     public HUD() {
         batch = new SpriteBatch();
